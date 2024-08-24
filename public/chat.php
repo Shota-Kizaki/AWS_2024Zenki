@@ -213,52 +213,64 @@ $select_sth->execute();
       background-color: #0056b3;
     }
 
-    /* モバイルデバイス向けのスタイル調整 */
-    @media screen and (max-width: 600px) {
-      h1 {
-        font-size: 1.4em;
-        margin-bottom: 0.75em;
-      }
-
-      table, thead, tbody, th, td, tr {
-        display: block;
-        width: 100%;
-      }
-
-      th {
-        display: none; /* ヘッダーを非表示に */
-      }
-
-      td {
-        display: flex;
-        justify-content: space-between;
-        border: none;
-        border-bottom: 1px solid #dee2e6;
-        padding: 0.75em 0;
-        font-size: 0.9em;
-      }
-
-      td::before {
-        content: attr(data-label);
-        flex-basis: 40%;
-        text-align: left;
-        font-weight: bold;
-        color: #495057;
-      }
-
-      input[type="text"], textarea {
-        font-size: 0.9em;
-        padding: 0.75em;
-      }
-
-      button {
-        width: 100%;
-        font-size: 1em;
-        padding: 0.75em;
-        margin-top: 1em;
-      }
+  /* モバイルデバイス向けのスタイル調整 */
+  @media screen and (max-width: 600px) {
+    h1 {
+      font-size: 1.4em;
+      margin-bottom: 0.75em;
     }
 
+    table, thead, tbody, th, td, tr {
+      display: block;
+      width: 100%;
+    }
+
+    th {
+      display: none; /* ヘッダーを非表示に */
+    }
+
+    td {
+      display: flex;
+      justify-content: space-between;
+      border: none;
+      border-bottom: 1px solid #dee2e6;
+      padding: 0.75em 0;
+      font-size: 0.9em;
+      position: relative;
+      padding-left: 1em; /* 左側に余白を追加 */
+    }
+
+    td::before {
+      content: attr(data-label);
+      flex-basis: 40%;
+      text-align: left;
+      font-weight: bold;
+      color: #495057;
+      padding-left: 1em; /* 左側に余白を追加 */
+    }
+
+    td::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background-color: #dee2e6;
+    }
+
+    input[type="text"], textarea {
+      font-size: 0.9em;
+      padding: 0.75em;
+    }
+
+    button {
+      width: 100%;
+      font-size: 1em;
+      padding: 0.75em;
+      margin-top: 1em;
+    }
+  }
     /* レスポンシブ対応のためのフォームラッパー */
     .form-wrapper {
       margin-top: 2em;
@@ -297,7 +309,7 @@ $select_sth->execute();
           <tr id="post-<?= $post['res_number'] ?>" style="border-top: 1px solid #ccc;">
             <td data-label=" "><a href="#post-<?= $post['res_number'] ?>" style="text-decoration: none;"><?= htmlspecialchars($post['res_number'], ENT_QUOTES, 'UTF-8') ?></a></td>
             <td data-label="名前"><?= htmlspecialchars($post['name'], ENT_QUOTES, 'UTF-8') ?></td>
-            <td data-label="ID"><?= htmlspecialchars($post['name_id'], ENT_QUOTES, 'UTF-8') ?></td>
+            <td data-label="ID:"><?= htmlspecialchars($post['name_id'], ENT_QUOTES, 'UTF-8') ?></td>
             <td data-label="日時"><?= htmlspecialchars($post['post_date'], ENT_QUOTES, 'UTF-8') ?></td>
             <?php 
             $content_with_anchors = preg_replace('/>>(\d+)/', '<a href="#post-$1">>>$1</a>', htmlspecialchars($post['content'], ENT_QUOTES, 'UTF-8'));

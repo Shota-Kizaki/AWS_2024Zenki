@@ -106,9 +106,10 @@ $topics = $sth->fetchAll(PDO::FETCH_ASSOC);
             }
 
             .new-topic-link {
-                width: 100%;
+                width: 100%; /* 幅を100%に変更 */
                 font-size: 1em;
                 padding: 0.75em;
+                box-sizing: border-box; /* paddingを含めた全体の幅を調整 */
             }
         }
     </style>
