@@ -22,23 +22,23 @@ docker compose up
  docker compose exec mysql mysql kyototech
 ```
 テーブル作成
-    1. トピック管理
-    ```sql
-    CREATE TABLE topics (
-        topic_id INT AUTO_INCREMENT PRIMARY KEY,
-        topic_name VARCHAR(255) NOT NULL
-    );
-    ```
-    2. チャット管理
-    ```sql
-    CREATE TABLE chat (
-        name_id TEXT NOT NULL,
-        name VARCHAR(255) NOT NULL,
-        res_number INT NOT NULL,
-        post_date DATETIME DEFAULT CURRENT_TIMESTAMP,
-        content TEXT NOT NULL,
-        topic_id INT NOT NULL,
-        FOREIGN KEY (topic_id) REFERENCES topics(topic_id)
-    );
-    ```
+トピック管理
+```sql
+CREATE TABLE topics (
+    topic_id INT AUTO_INCREMENT PRIMARY KEY,
+    topic_name VARCHAR(255) NOT NULL
+);
+```
+チャット管理
+```sql
+CREATE TABLE chat (
+    name_id TEXT NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    res_number INT NOT NULL,
+    post_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    content TEXT NOT NULL,
+    topic_id INT NOT NULL,
+    FOREIGN KEY (topic_id) REFERENCES topics(topic_id)
+);
+```
 4. ブラウザで `localhost/top.php`にアクセスできればOK。
