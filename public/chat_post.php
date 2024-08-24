@@ -1,9 +1,15 @@
 <?php
 $dbh = new PDO('mysql:host=mysql;dbname=kyototech', 'root', '');
 
-$name = $_POST['name'];
+// POSTデータの取得
+$name = isset($_POST['name']) ? trim($_POST['name']) : '';
 $content = $_POST['content'];
 $topic_id = intval($_POST['topic_id']);
+
+// 名前が空の場合は「名無し」とする
+if (empty($name)) {
+    $name = '名無し';
+}
 
 // レスナンバーの最大値を取得して、新しいレスナンバーを決定する
 $sth = $dbh->prepare('SELECT MAX(res_number) FROM chat WHERE topic_id = :topic_id');
@@ -12,9 +18,9 @@ $sth->execute();
 $max_res_number = $sth->fetchColumn();
 $res_number = $max_res_number + 1;
 
-//name_idを設定(IPアドレスを取得して、それをmd5でハッシュ化)
+// name_idを設定（IPアドレスを取得して、それをmd5でハッシュ化）
 $str = $_SERVER["REMOTE_ADDR"];
-$name_id = substr(md5($str),0,30);
+$name_id = substr(md5($str), 0, 30);
 
 // 新しい投稿を挿入する
 $sth = $dbh->prepare('INSERT INTO chat (name_id, name, res_number, content, topic_id) VALUES (:name_id, :name, :res_number, :content, :topic_id)');

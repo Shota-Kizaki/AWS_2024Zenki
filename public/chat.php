@@ -128,6 +128,7 @@ $select_sth->execute();
       font-size: 1.8em;
       color: #343a40;
       margin-bottom: 1em;
+      text-align: center;
     }
 
     a {
@@ -234,6 +235,43 @@ $select_sth->execute();
         margin-top: 1em;
       }
     }
+
+    .form-wrapper {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 1em;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-wrapper form {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start; /* 左寄せ */
+    }
+
+    .form-wrapper label {
+      display: block;
+      margin-bottom: 0.5em;
+    }
+
+    .form-wrapper input[type="text"], 
+    .form-wrapper textarea {
+      width: 100%;
+      margin-bottom: 1em;
+    }
+
+    .form-wrapper button {
+      align-self: flex-start; /* ボタンを左寄せ */
+    }
+    
+    .form-wrapper textarea {
+    width: 100%;
+    height: 150px; /* 高さを指定して大きくする */
+    margin-bottom: 1em;
+  }
   </style>
 </head>
 <body>
@@ -242,6 +280,7 @@ $select_sth->execute();
   <h1>掲示板: <?= $topic_name ?></h1>
   <a href="top.php">トップページに戻る</a>
 </div>
+
 <div style="width: 100%; text-align: center; padding-top: 1em; border-top: 1px solid #ccc; margin-bottom: 0.5em">
   <?= $page ?>ページ目
   (全 <?= floor($count_all / $count_per_page) + 1 ?>ページ中)
@@ -266,6 +305,18 @@ $select_sth->execute();
   </div>
 </div>
 
+<div style="display: flex; justify-content: center; margin-bottom: 2em;">
+  <div>
+    <?php if($page > 1): ?>
+      <a href="chat.php?topic_id=<?= $topic_id ?>&page=<?= $page - 1 ?>"> ＜前のページ</a>
+    <?php endif; ?>
+  </div>
+  <div>
+    <?php if($count_all > $page * $count_per_page): ?>
+      <a href="chat.php?topic_id=<?= $topic_id ?>&page=<?= $page + 1 ?>">次のページ＞ </a>
+    <?php endif; ?>
+  </div>
+</div>
 
 <div style="text-align: center; margin-top: 2em;">
   <button id="showFormButton">投稿する</button>
@@ -276,34 +327,23 @@ $select_sth->execute();
     <input type="hidden" name="topic_id" value="<?= htmlspecialchars($topic_id, ENT_QUOTES, 'UTF-8') ?>">
     <div>
       <label for="name">名前:</label>
-      <input type="text" id="name" name="name" required>
+      <input type="text" id="name" name="name">
     </div>
     <div>
       <label for="content">内容:</label>
       <textarea id="content" name="content" required></textarea>
     </div>
-    <div style="text-align: center;">
+    <div>
       <button type="submit">投稿する</button>
     </div>
   </form>
 </div>
-<div style="display: flex; justify-content: space-between; margin-bottom: 2em;">
-        <div>
-          <?php if($page > 1): ?>
-            <a href="chat.php?topic_id=<?= $topic_id ?>&page=<?= $page - 1 ?>"> ＜前のページ</a>
-          <?php endif; ?>
-        </div>
-        <div>
-          <?php if($count_all > $page * $count_per_page): ?>
-            <a href="chat.php?topic_id=<?= $topic_id ?>&page=<?= $page + 1 ?>">次のページ＞ </a>
-          <?php endif; ?>
-        </div>
-      </div>
 
 <script>
   document.getElementById('showFormButton').addEventListener('click', function() {
     document.getElementById('postForm').style.display = 'block';
     this.style.display = 'none';
+    window.scrollTo(0, document.body.scrollHeight); // 投稿フォームを表示した際にページの一番下にスクロール
   });
 
   document.querySelectorAll('a[href^="#post-"]').forEach(anchor => {
@@ -316,5 +356,6 @@ $select_sth->execute();
     });
   });
 </script>
+
 </body>
 </html>
