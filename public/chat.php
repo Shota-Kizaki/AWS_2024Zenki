@@ -237,41 +237,38 @@ $select_sth->execute();
     }
 
     .form-wrapper {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 1em;
-      background-color: #fff;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    .form-wrapper form {
       display: flex;
       flex-direction: column;
-      align-items: flex-start; /* 左寄せ */
-    }
-
-    .form-wrapper label {
-      display: block;
-      margin-bottom: 0.5em;
-    }
-
-    .form-wrapper input[type="text"], 
-    .form-wrapper textarea {
+      align-items: flex-start; /* 内容を左寄せ */
       width: 100%;
-      margin-bottom: 1em;
+      max-width: 800px; /* 最大幅を指定 */
+      margin: 0 auto; /* 中央寄せ */
+      padding: 1em;
+      border: 1px solid #ccc; /* 枠線 */
+      border-radius: 4px; /* 角を丸くする */
+      background-color: #fff; /* 背景色 */
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* ボックスシャドウ */
     }
 
-    .form-wrapper button {
-      align-self: flex-start; /* ボタンを左寄せ */
-    }
-    
     .form-wrapper textarea {
-    width: 100%;
-    height: 150px; /* 高さを指定して大きくする */
-    margin-bottom: 1em;
+      width: 100%; /* 幅をフォームの幅に合わせる */
+      height: 150px; /* 高さを指定して大きくする */
+      margin-bottom: 1em;
+      padding: 0.75em; /* 内側の余白 */
+      border: 1px solid #ced4da; /* 枠線 */
+      border-radius: 4px; /* 角を丸くする */
+      box-sizing: border-box; /* パディングとボーダーを幅に含める */
+    }
+
+    .form-wrapper .form-actions {
+    display: flex;
+    justify-content: flex-end; /* ボタンを右寄せ */
+    margin-top: 1em; /* 上に余白を追加 */
   }
+
+    .form-wrapper button:hover {
+      background-color: #0056b3;
+    }
   </style>
 </head>
 <body>
@@ -333,9 +330,10 @@ $select_sth->execute();
       <label for="content">内容:</label>
       <textarea id="content" name="content" required></textarea>
     </div>
-    <div>
+    <div class="form-actions">
       <button type="submit">投稿する</button>
     </div>
+    
   </form>
 </div>
 
