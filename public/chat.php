@@ -58,7 +58,7 @@ $dbh = new PDO('mysql:host=mysql;dbname=kyototech', 'root', '');
 
 // トップページから`topic_id`を取得する
 $topic_id = isset($_GET['topic_id']) ? intval($_GET['topic_id']) : 1;
-
+$sth = $dbh->prepare('SELECT topic_id, topic_name FROM topics ORDER BY topic_name ASC');
 // トピックの存在を確認
 $topic_sth = $dbh->prepare('SELECT COUNT(*) FROM topics WHERE topic_id = :topic_id;');
 $topic_sth->bindParam(':topic_id', $topic_id, PDO::PARAM_INT);
@@ -306,6 +306,18 @@ $select_sth->execute();
           </tr>
         <?php endforeach ?>
       </tbody>
+      <div style="display: flex; justify-content: space-between; margin-bottom: 2em;">
+        <div>
+          <?php if($page > 1): ?>
+            <a href="chat.php?topic_id=<?= $topic_id ?>&page=<?= $page - 1 ?>">前のページ</a>
+          <?php endif; ?>
+        </div>
+        <div>
+          <?php if($count_all > $page * $count_per_page): ?>
+            <a href="chat.php?topic_id=<?= $topic_id ?>&page=<?= $page + 1 ?>">次のページ</a>
+          <?php endif; ?>
+        </div>
+      </div>
     </table>
     
     <div style="text-align: center; margin-top: 2em;">
